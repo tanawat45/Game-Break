@@ -47,7 +47,7 @@ public class Board extends JPanel implements Commons{
         int k = 0;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 6; j++) {
-                bricks[k] = new Brick(j * 40 + 30, i * 10 + 50);
+                bricks[k] = new Brick(j * 110 + 100, i * 40 + 50,k%2);
                 k++;
             }
         }
@@ -86,7 +86,7 @@ public class Board extends JPanel implements Commons{
         for (int i = 0; i < N_OF_BRICKS; i++) {
             if (!bricks[i].isDestroyed()) {
                 g2d.drawImage(bricks[i].getImage(), bricks[i].getX(),
-                        bricks[i].getY(), bricks[i].getWidth(),
+                        bricks[i].getY()+10, bricks[i].getWidth()+10,
                         bricks[i].getHeight(), this);
             }
         }
@@ -216,7 +216,7 @@ public class Board extends JPanel implements Commons{
                         ball.setYDir(-1);
                     }
 
-                    bricks[i].setDestroyed(true);
+                    bricks[i].setDestroyed();
                 }
             }
         }

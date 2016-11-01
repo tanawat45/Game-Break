@@ -26,13 +26,9 @@ public class Sprite {
         return y;
     }
 
-    public int getWidth() {
-        return i_width;
-    }
+    public int getWidth() {return i_width;}
 
-    public int getHeight() {
-        return i_heigth;
-    }
+    public int getHeight() {return i_heigth;}
 
     Image getImage() {
         return image;

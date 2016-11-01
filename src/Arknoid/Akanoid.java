@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Akanoid extends JFrame{
-    public Akanoid() {
+    private Akanoid() {
         initUI();
     }
 
@@ -13,11 +13,11 @@ public class Akanoid extends JFrame{
         add(new Board());
         setTitle("Breakout");
 
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);  //end rum to closes flrame
         setSize(Commons.WIDTH, Commons.HEIGTH);
         setLocationRelativeTo(null);
         setResizable(false);
-        setVisible(true);
+        setVisible(true); // show frame
     }
 
     public static void main(String[] args) {

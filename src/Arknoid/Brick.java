@@ -4,17 +4,32 @@ import javax.swing.ImageIcon;
 
 public class Brick extends Sprite{
     private boolean destroyed;
+    private int type;
+    private int hit;
 
-    public Brick(int x, int y) {
+    public Brick(int x, int y, int type) {
 
         this.x = x;
         this.y = y;
 
-        ImageIcon ii = new ImageIcon("brick.png");
-        image = ii.getImage();
+        if (type == 0){
+            ImageIcon ii = new ImageIcon("brick0.png");
+            image = ii.getImage();
 
-        i_width = image.getWidth(null);
-        i_heigth = image.getHeight(null);
+            i_width = image.getWidth(null);
+            i_heigth = image.getHeight(null);
+            this.type = type;
+            hit = 1;
+        }else if (type == 1){
+            ImageIcon ii = new ImageIcon("brick1.png");
+            image = ii.getImage();
+
+            i_width = image.getWidth(null);
+            i_heigth = image.getHeight(null);
+            this.type = type;
+            hit = 2;
+        }
+
 
         destroyed = false;
     }
@@ -24,9 +39,16 @@ public class Brick extends Sprite{
         return destroyed;
     }
 
-    public void setDestroyed(boolean val) {
+    public void setDestroyed() {
+        hit--;
+        if (type == 0){
+            if (hit == 0)
+                destroyed = true;
+        }else if (type == 1){
+            if (hit == 0)
+                destroyed = true;
+        }
 
-        destroyed = val;
     }
 }
 

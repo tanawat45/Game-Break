@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 
 public class Brick1 extends Sprite{
         private boolean destroyed;
-
+        private int hit = 1;
         public Brick1(int x, int y) {
             this.x = x;
             this.y = y;
@@ -22,9 +22,11 @@ public class Brick1 extends Sprite{
             return destroyed;
         }
 
-        public void setDestroyed(boolean val) {
-
-            destroyed = val;
+        public void setDestroyed() {
+            hit--;
+            if (hit <=0){
+                destroyed = true;
+            }
         }
     }
 

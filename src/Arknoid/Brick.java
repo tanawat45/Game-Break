@@ -6,11 +6,9 @@ public class Brick extends Sprite{
     private boolean destroyed;
 
     public Brick(int x, int y) {
-
         this.x = x;
         this.y = y;
-
-        ImageIcon ii = new ImageIcon("brick.png");
+        ImageIcon ii = new ImageIcon("brick3.png");
         image = ii.getImage();
 
         i_width = image.getWidth(null);
@@ -18,6 +16,7 @@ public class Brick extends Sprite{
 
         destroyed = false;
     }
+
 
     public boolean isDestroyed() {
 

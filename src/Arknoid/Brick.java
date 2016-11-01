@@ -36,7 +36,6 @@ public class Brick extends Sprite{
 
 
     public boolean isDestroyed() {
-
         return destroyed;
     }
 

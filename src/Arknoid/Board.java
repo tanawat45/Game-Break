@@ -30,7 +30,10 @@ public class Board extends JPanel implements Commons{
         setDoubleBuffered(true);
         timer = new Timer();
         timer.scheduleAtFixedRate(new ScheduleTask(), DELAY, PERIOD);
+
     }
+
+
 
     @Override
     public void addNotify() {
@@ -47,8 +50,8 @@ public class Board extends JPanel implements Commons{
         int k = 0;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 6; j++) {
-                bricks[k] = new Brick(j * 40 + 30, i * 10 + 50);
-                k++;
+                    bricks[k] = new Brick(j * 100 + 100, i * 40 + 50,k%2);
+                    k++;
             }
         }
     }
@@ -216,7 +219,7 @@ public class Board extends JPanel implements Commons{
                         ball.setYDir(-1);
                     }
 
-                    bricks[i].setDestroyed(true);
+                    bricks[i].setDestroyed();
                 }
             }
         }

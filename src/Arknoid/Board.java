@@ -9,12 +9,14 @@ import java.util.TimerTask;
 
 
 public class Board extends JPanel implements Commons{
-    private Timer timer;
+    private Timer timer,timeItem;
     private String message = "Game Over";
     private Ball ball;
     private Paddle paddle;
     private Brick bricks[];
     private boolean ingame = true;
+    private Item item;
+    private Ball ball1[];
 
     public Board() {
 
@@ -30,6 +32,8 @@ public class Board extends JPanel implements Commons{
         setDoubleBuffered(true);
         timer = new Timer();
         timer.scheduleAtFixedRate(new ScheduleTask(), DELAY, PERIOD);
+        timeItem = new Timer();
+        timeItem.scheduleAtFixedRate(new ScheuleItem(), DELAYITEM , PERIODITEM);
     }
 
     @Override
@@ -42,7 +46,9 @@ public class Board extends JPanel implements Commons{
     private void gameInit() {
 
         ball = new Ball();
+        ball1 = new Ball[N_OF_ITEM];
         paddle = new Paddle();
+        item = new Item();
 
         int k = 0;
         for (int i = 0; i < 5; i++) {
@@ -83,11 +89,25 @@ public class Board extends JPanel implements Commons{
         g2d.drawImage(paddle.getImage(), paddle.getX(), paddle.getY(),
                 paddle.getWidth(), paddle.getHeight(), this);
 
+        /*for (int i = 1; i < N_OF_ITEM; i++) {
+            if ( ball1[i].isNumZero()) {
+                g2d.drawImage(ball1[i].getImage(), ball1[i].getX(), ball1[i].getY(),
+                        ball1[i].getWidth(), ball1[i].getHeight(), this);
+            }
+        }*/
+
         for (int i = 0; i < N_OF_BRICKS; i++) {
             if (!bricks[i].isDestroyed()) {
                 g2d.drawImage(bricks[i].getImage(), bricks[i].getX(),
                         bricks[i].getY()+10, bricks[i].getWidth()+10,
                         bricks[i].getHeight(), this);
+            }
+
+            if (item.isItem()){
+                if (item.getX() != 0 && item.getY() != 0) {
+                    g2d.drawImage(item.getImage(), item.getX(), item.getY(),
+                            item.getWidth(), item.getHeight(), this);
+                }
             }
         }
     }
@@ -124,7 +144,18 @@ public class Board extends JPanel implements Commons{
 
             ball.move();
             paddle.move();
+
+
             checkCollision();
+            repaint();
+        }
+    }
+
+    private class ScheuleItem extends  TimerTask{
+        @Override
+        public void run() {
+            item.move();
+
             repaint();
         }
     }
@@ -141,6 +172,10 @@ public class Board extends JPanel implements Commons{
             stopGame();
         }
 
+        if (item.getY() > Commons.BOTTOM_EDGE ){
+            item.setisItem();
+        }
+
         for (int i = 0, j = 0; i < N_OF_BRICKS; i++) {
 
             if (bricks[i].isDestroyed()) {
@@ -151,6 +186,13 @@ public class Board extends JPanel implements Commons{
                 message = "Victory";
                 stopGame();
             }
+        }
+
+         if(item.getWidth() != 0 && item.getHeight() != 0){
+             if((item.getRect()).intersects(paddle.getRect())) {
+                paddle.setItem();
+                item.setisItem();
+             }
         }
 
         if ((ball.getRect()).intersects(paddle.getRect())) {
@@ -217,8 +259,26 @@ public class Board extends JPanel implements Commons{
                     }
 
                     bricks[i].setDestroyed();
+
+                    if (bricks[i].isDestroyed()){
+                        if (!item.isItem()) {
+                            int random = (int) (Math.random() * 2) + 1;
+                            if (random == 1){
+                                paddle.setState(paddle.getState()+1);
+                            }else if (random == 2){
+                                paddle.setState(paddle.getState()-1);
+                            }
+                            item = new Item(random);
+                            item.itemType(item.getType());
+                            item.setXDir(bricks[i].getX());
+                            item.setYDir(bricks[i].getY());
+                        }
+
+                    }
                 }
             }
         }
+
+
     }
 }

@@ -16,7 +16,6 @@ public class Board extends JPanel implements Commons{
     private Brick bricks[];
     private boolean ingame = true;
     private Item item;
-    private Ball ball1[];
 
     public Board() {
 
@@ -46,7 +45,7 @@ public class Board extends JPanel implements Commons{
     private void gameInit() {
 
         ball = new Ball();
-        ball1 = new Ball[N_OF_ITEM];
+
         paddle = new Paddle();
         item = new Item();
 

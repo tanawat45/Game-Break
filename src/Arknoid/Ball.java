@@ -6,12 +6,12 @@ public class Ball extends Sprite implements Commons{
     private int xdir;
     private int ydir;
     private int number;
-
+    private boolean isNoBall;
 
     public Ball() {
-        xdir = (( (int)Math.random() * 3)+1 >= 2) ? 1:-1;
-        ydir = (( (int)Math.random() * 3)+1 >= 2) ? 1:-1;;
-        this.number =1 ;
+        xdir = (( (int)Math.random() * 2)+1 == 2) ? 1:-1;
+        ydir = (( (int)Math.random() * 2)+1 == 2) ? -1:1;
+
 
         ImageIcon ii = new ImageIcon("picture/ball.png");
         image = ii.getImage();
@@ -19,11 +19,12 @@ public class Ball extends Sprite implements Commons{
         i_width = image.getWidth(null);
         i_heigth = image.getHeight(null);
 
+        this.number =1 ;
+        isNoBall = false;
         resetState();
     }
 
-    /*public void newBall(){
-        Ball ball = new Ball();
+    public void newBall(){
         xdir = 1;
         ydir = -1;
         number++;
@@ -36,7 +37,7 @@ public class Ball extends Sprite implements Commons{
 
         resetState();
 
-    }*/
+    }
 
     public void move() {
 
@@ -79,5 +80,20 @@ public class Ball extends Sprite implements Commons{
         else  return  false;
     }
 
+    public int getNumber(){
+        return number;
+    }
+
+    public void setNumber(){
+        number++;
+    }
+
+    public void setisNoBall(int nums){
+        number = nums;
+    }
+
+    public boolean getisNoBall(){
+        return  isNoBall;
+    }
 }
 

@@ -27,7 +27,6 @@ public class Akanoid extends JFrame{
             public void run() {
                 Akanoid game = new Akanoid();
                 game.setVisible(true);
-
             }
         });
     }

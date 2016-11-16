@@ -17,7 +17,7 @@ public class Brick extends Sprite{
         if (type == 0){
             this.type = type;
 
-            ImageIcon ii = new ImageIcon("brick.png");
+            ImageIcon ii = new ImageIcon("brick5.png");
             image = ii.getImage();
 
             i_width = image.getWidth(null);
@@ -27,7 +27,7 @@ public class Brick extends Sprite{
         }else if (type == 1){
             this.type = type;
 
-            ImageIcon ii = new ImageIcon("brick1.png");
+            ImageIcon ii = new ImageIcon("brick4.png");
             image = ii.getImage();
 
             i_width = image.getWidth(null);

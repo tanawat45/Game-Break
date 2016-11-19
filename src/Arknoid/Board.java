@@ -23,6 +23,9 @@ public class Board extends JPanel implements Commons {
     private int n,count = 0;
     private int nball;
     private Item item;
+    private  int paddleX;
+    private int item4,item5  ;
+
 
 
 
@@ -59,13 +62,15 @@ public class Board extends JPanel implements Commons {
 
     private void gameInit() {
 
+        
         balls.add(new Ball());
-        balls.add(new Ball());
-
+        balls.add(new Ball(500));
+        nball = 1;
+        System.out.println(nball+ "01");
         item = new Item();
         paddle = new Paddle();
 
-        nball = balls.size();
+
         int k = 0;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 6; j++) {
@@ -117,9 +122,12 @@ public class Board extends JPanel implements Commons {
     }
 
     private void drawObjects(Graphics2D g2d) {
+
             for (Ball numball : balls) {
-                g2d.drawImage(numball.getImage(), numball.getX(), numball.getY(),
-                        numball.getWidth(), numball.getHeight(), this);
+                if (numball.getIsBall()) {
+                    g2d.drawImage(numball.getImage(), numball.getX(), numball.getY(),
+                            numball.getWidth(), numball.getHeight(), this);
+                }
             }
             g2d.drawImage(paddle.getImage(), paddle.getX(), paddle.getY(),
                     paddle.getWidth(), paddle.getHeight(), this);
@@ -177,7 +185,8 @@ public class Board extends JPanel implements Commons {
         @Override
         public void run() {
             for (Ball numBall : balls){
-                numBall.move();
+                if (numBall.getIsBall())
+                    numBall.move();
             }
             //ball.move();
             item.move();
@@ -196,15 +205,28 @@ public class Board extends JPanel implements Commons {
 
     private void checkCollision() {
 
-        if (nball <= 0) stopGame();
 
-        if (item.getY() > Commons.BOTTOM_EDGE ){
+        if (item.getY() > Commons.BOTTOM_EDGE) {
             item.setisItem();
         }
 
-        if(item.getWidth() != 0 && item.getHeight() != 0){
-            if((item.getRect()).intersects(paddle.getRect())) {
-                paddle.setItem();
+
+        if (item.getWidth() != 0 && item.getHeight() != 0) {
+            if ((item.getRect()).intersects(paddle.getRect()) && item.isItem()) {
+                if (item.getType() == 1 || item.getType() == 2) {
+                    paddle.setItem();
+                    System.out.println(item.getType());
+                } else if (item.getType() == 3) {
+                    Ball newBall = new Ball(nball);
+                    balls.add(newBall);
+                    nball++;
+                    System.out.println(nball);
+                } else if (item.getType() == 4) {
+                    if (item4 >= 1) item4 = 1;
+                    else item4++;
+                } else if (item.getType() == 5) {
+                    item5 = 1;
+                }
                 item.setisItem();
             }
         }
@@ -217,10 +239,10 @@ public class Board extends JPanel implements Commons {
 
             if (j == N_OF_BRICKS) {
                 stage++;
-                if (stage<=2){
+                if (stage <= 2) {
                     JOptionPane.showMessageDialog(null, "Next Stage");
                     nextStage();
-                }else {
+                } else {
                     message = "Victory";
                     stopGame();
 
@@ -230,14 +252,46 @@ public class Board extends JPanel implements Commons {
         }
         for (Ball numBall : balls) {
             if (numBall.getRect().getMaxY() > Commons.BOTTOM_EDGE) {
-                if (numBall.getIsBall()) {
-                    numBall.setIsBall();
+                if (item4 >= 1 && !(numBall.getNumber() == 500))  {
+                    int random = (int) Math.random() * 2;
+                    numBall.setXDir(0);
+                    numBall.setYDir(-1);
+                    item4--;
+                } else if (numBall.getIsBall()) {
+                    numBall.setIsBall(false);
+                    if (numBall.getNumber() == 500) {
+                        nball++;
+                        item5 = 0;
+                    }
                     nball--;
+                    System.out.println(nball + " " + nball);
                 }
+
+
+                if (nball <= 0) stopGame();
             }
 
-            if ((numBall.getRect()).intersects(paddle.getRect())) {
+                if (item5 >= 1  ) {
+                    if (numBall.getNumber() == 500)
+                        if (!numBall.getIsBall()) {
+                            numBall.setY(INIT_BALL_Y);
+                            numBall.setX(0);
+                            numBall.setXDir(1);
+                            numBall.setYDir(-1);
+                            numBall.setIsBall(true);
+                        }
+                }
+                else if (item5 < 0 && numBall.getNumber() == 500)
+                    numBall.setIsBall(false);
 
+
+            if ((numBall.getRect()).intersects(paddle.getRect())) {
+                if ( numBall.getNumber() == 500 && numBall.getIsBall()) {
+                    if (item5 == 1)
+                        item5 = 0;
+                    else if(item5 == 0)
+                        item5 = -1;;
+                }
                 int paddleLPos = (int) paddle.getRect().getMinX();
                 int ballLPos = (int) numBall.getRect().getMinX();
 
@@ -276,8 +330,11 @@ public class Board extends JPanel implements Commons {
 
         for (int i = 0; i < N_OF_BRICKS; i++) {
             for (Ball numBall : balls) {
-            if (!bricks[i].isDestroyed()) {
-                if ((numBall.getRect()).intersects(bricks[i].getRect())) {
+                if (!bricks[i].isDestroyed()) {
+                    if ((numBall.getRect()).intersects(bricks[i].getRect())) {
+                        if (item5 >= 0 && numBall.getNumber() == 500){
+                            bricks[i].setDestroyed();
+                        }
                         int ballLeft = (int) numBall.getRect().getMinX();
                         int ballHeight = (int) numBall.getRect().getHeight();
                         int ballWidth = (int) numBall.getRect().getWidth();
@@ -300,28 +357,28 @@ public class Board extends JPanel implements Commons {
                             } else if (bricks[i].getRect().contains(pointBottom)) {
                                 numBall.setYDir(-1);
                             }
-
                             bricks[i].setDestroyed();
                         }
+                        if (bricks[i].isDestroyed()) {
+                            if (!item.isItem()) {
+                                int random = (int) (Math.random() * 5) + 1;
+                                if (random == 1) {
+                                    paddle.setState(paddle.getState() + 1);
+                                } else if (random == 2) {
+                                    paddle.setState(paddle.getState() - 1);
+                                }else if(random == 5){
+
+                                }
+                                item = new Item(random);
+                                item.itemType(item.getType());
+                                item.setXDir(bricks[i].getX());
+                                item.setYDir(bricks[i].getY());
+                            }
+
+                        }
                     }
-                    if (bricks[i].isDestroyed()){
-                        if (!item.isItem()) {
-                            int random = (int) (Math.random() * 3) + 1;
-                        if (random == 1){
-                            paddle.setState(paddle.getState()+1);
-                        }else if (random == 2){
-                            paddle.setState(paddle.getState()-1);
-                        }else if (random == 3){
-                            //nums++;
-                        }
-                            item = new Item(random);
-                            item.itemType(item.getType());
-                            item.setXDir(bricks[i].getX());
-                            item.setYDir(bricks[i].getY());
-                        }
-                }
                 }
             }
         }
-        }
+    }
     }

@@ -2,7 +2,7 @@ package Arknoid;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
-
+//
 public class Paddle extends Sprite implements Commons{
     private int dx;
     private int type = 0;

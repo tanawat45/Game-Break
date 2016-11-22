@@ -98,5 +98,8 @@ public class Ball extends Sprite implements Commons{
     public int getNumber(){
         return  numball;
     }
+
+
+
 }
 

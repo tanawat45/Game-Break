@@ -25,7 +25,8 @@ public class Board extends JPanel implements Commons {
     private Item item;
     private  int paddleX;
     private int item4,item5  ;
-
+    private ATK atk [];
+    private int randomatk;
 
 
 
@@ -39,6 +40,7 @@ public class Board extends JPanel implements Commons {
         setFocusable(true);
 
         balls = new ArrayList<>();
+        atk = new ATK[N_OF_BRICKS];
         bricks = new Brick[N_OF_BRICKS];
         bricks1 = new Brick1[N_OF_BRICKS];
         setDoubleBuffered(true);
@@ -66,7 +68,6 @@ public class Board extends JPanel implements Commons {
         balls.add(new Ball());
         balls.add(new Ball(500));
         nball = 1;
-        System.out.println(nball+ "01");
         item = new Item();
         paddle = new Paddle();
 
@@ -75,6 +76,7 @@ public class Board extends JPanel implements Commons {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 6; j++) {
                 bricks[k] = new Brick(j * 100 + 100, i * 40 + 50, 3);
+                atk[k] = new ATK();
                 k++;
             }
         }
@@ -139,6 +141,12 @@ public class Board extends JPanel implements Commons {
                             bricks[i].getHeight(), this);
                 }
 
+                if (atk[i].getIsAtk()){
+                    g2d.drawImage(atk[i].getImage(), atk[i].getX(),
+                            atk[i].getY(), atk[i].getWidth(),
+                            atk[i].getHeight(), this);
+                }
+
                 if (item.isItem()){
                     if (item.getX() != 0 && item.getY() != 0) {
                         g2d.drawImage(item.getImage(), item.getX(), item.getY(),
@@ -184,11 +192,16 @@ public class Board extends JPanel implements Commons {
 
         @Override
         public void run() {
+            randomatk = (int) Math.random()*2;
             for (Ball numBall : balls){
                 if (numBall.getIsBall())
                     numBall.move();
             }
-            //ball.move();
+
+            for (ATK iatk : atk){
+                if (iatk.getIsAtk())
+                    iatk.move();
+            }
             item.move();
             paddle.move();
             checkCollision();
@@ -210,12 +223,14 @@ public class Board extends JPanel implements Commons {
             item.setisItem();
         }
 
-
         if (item.getWidth() != 0 && item.getHeight() != 0) {
             if ((item.getRect()).intersects(paddle.getRect()) && item.isItem()) {
-                if (item.getType() == 1 || item.getType() == 2) {
+                if (item.getType() == 1) {
+                    paddle.setState(paddle.getState() + 1);
                     paddle.setItem();
-                    System.out.println(item.getType());
+                } else if (item.getType() == 2) {
+                    paddle.setState(paddle.getState() - 1);
+                    paddle.setItem();
                 } else if (item.getType() == 3) {
                     Ball newBall = new Ball(nball);
                     balls.add(newBall);
@@ -329,12 +344,41 @@ public class Board extends JPanel implements Commons {
 
 
         for (int i = 0; i < N_OF_BRICKS; i++) {
+
+            if (atk[i].getWidth() != 0 && atk[i].getHeight() != 0) {
+                if ((paddle.getRect()).intersects(atk[i].getRect()) && atk[i].getIsAtk()) {
+                    if (atk[i].getType() == 1) {
+                        paddle.setState(paddle.getState() - 1);
+                        paddle.setItem();
+                        atk[i].setIsAtk();
+                        System.out.println(item.getType());
+                    } else if (atk[i].getType() == 3) {
+                        paddle.setMoveState(paddle.getMoveState() + 1);
+                        atk[i].setIsAtk();
+                        System.out.println("move " + paddle.getMoveState());
+                    } else if (atk[i].getType() == 2) {
+                        paddle.setMoveSpeed(paddle.getMoveSpeed() - 1);
+                        atk[i].setIsAtk();
+                        System.out.println("moveSpeed " + paddle.getMoveSpeed());
+                    }
+                }
+            }
             for (Ball numBall : balls) {
                 if (!bricks[i].isDestroyed()) {
+                    int random1 = (int) (Math.random()*30000)+1;
+                    if (random1 == 2){
+                        atk[i] = new ATK(random1);
+                   //      System.out.println("1 " + atk[i].getType());
+                        atk[i].setXDir(bricks[i].getX());
+                        atk[i].setYDir(bricks[i].getY());
+                    }
+
+
                     if ((numBall.getRect()).intersects(bricks[i].getRect())) {
                         if (item5 >= 0 && numBall.getNumber() == 500){
                             bricks[i].setDestroyed();
                         }
+
                         int ballLeft = (int) numBall.getRect().getMinX();
                         int ballHeight = (int) numBall.getRect().getHeight();
                         int ballWidth = (int) numBall.getRect().getWidth();
@@ -361,14 +405,7 @@ public class Board extends JPanel implements Commons {
                         }
                         if (bricks[i].isDestroyed()) {
                             if (!item.isItem()) {
-                                int random = (int) (Math.random() * 5) + 1;
-                                if (random == 1) {
-                                    paddle.setState(paddle.getState() + 1);
-                                } else if (random == 2) {
-                                    paddle.setState(paddle.getState() - 1);
-                                }else if(random == 5){
-
-                                }
+                                int random = (int) (Math.random() * 1) + 1;
                                 item = new Item(random);
                                 item.itemType(item.getType());
                                 item.setXDir(bricks[i].getX());
@@ -380,5 +417,5 @@ public class Board extends JPanel implements Commons {
                 }
             }
         }
-    }
+      }
     }

@@ -10,7 +10,7 @@ public class Paddle extends Sprite implements Commons{
     private int moveState ;
     private int moveSpeed ;
     ImageIcon ii;
-//
+
     public Paddle() {
         ii = new ImageIcon("paddle1.png");
         image = ii.getImage();

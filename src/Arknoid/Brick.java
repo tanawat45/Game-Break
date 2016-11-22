@@ -82,4 +82,14 @@ public class Brick extends Sprite{
                 destroyed = true;
         }
     }
+
+    public void setType(int type){
+        this.type = type;
+    }
+
+    public int getType(){
+        return type;
+    }
+
+
 }

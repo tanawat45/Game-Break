@@ -5,6 +5,8 @@ import javax.swing.*;
 /**
  * Created by 123 on 16/11/2559.
  */
+
+//
 public class Item extends Sprite implements Commons {
     private int xdir;
     private int ydir;

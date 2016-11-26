@@ -816,7 +816,7 @@ public class Board extends JPanel implements Commons {
                     {*/
                         stage++;
                         nextStage();
-                 //  }
+                 ///  }
                 }
 
             }

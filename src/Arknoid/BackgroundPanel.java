@@ -19,7 +19,7 @@ public class BackgroundPanel extends Item {
             i_width = image.getWidth(null);
             i_heigth = image.getHeight(null);
         } else if (state == 5) {
-            ImageIcon ii = new ImageIcon("Backgroundbegin.png");
+            ImageIcon ii = new ImageIcon("Backgroundbegin1.png");
             image = ii.getImage();
 
             i_width = image.getWidth(null);

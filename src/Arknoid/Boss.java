@@ -11,7 +11,7 @@ public class Boss extends Item {
     private int atkboss;
     private int dx,moveState;
     public Boss(){
-        hp = 0;
+        hp = 7000;
         x = 600;
         y = 00;
         ImageIcon ii = new ImageIcon("boss2.1.1.png");

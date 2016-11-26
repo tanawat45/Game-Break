@@ -95,7 +95,6 @@ public class Board extends JPanel implements Commons {
 
         item = new Item();*/
         if (stage == 0){
-            confirm = false;
             this.stage = 0;
             paddle = new Paddle();
             paddle.setCheckpass(0);
@@ -105,7 +104,6 @@ public class Board extends JPanel implements Commons {
         }
 
         if (stage == -1){
-            confirm = false;
             this.stage = -1;
             paddle = new Paddle();
             paddle.setCheckpass(0);
@@ -115,20 +113,23 @@ public class Board extends JPanel implements Commons {
 
 
         if (stage == 5){
-            confirm = false;
             this.stage = 5;
             paddle = new Paddle();
             paddle.setCheckpass(0);
             background = new BackgroundPanel(5);
         }
         if (stage == 6){
-            confirm = false;
             this.stage = 6;
             paddle = new Paddle();
             paddle.setCheckpass(0);
             background = new BackgroundPanel(6);
         }
-
+        if (stage == 7){
+            this.stage = 7;
+            System.out.println("end");
+            message = "Victory";
+            stopGame();
+        }
         int k = 0;
         if (stage == 4){
             boss.setBoss(true);
@@ -146,7 +147,7 @@ public class Board extends JPanel implements Commons {
             atk = new ATK[N_OF_BRICKS];;
             nball = balls.size()-1;
             bricks = new Brick[N_OF_BRICKS];
-            background = new BackgroundPanel(1);
+            background = new BackgroundPanel(5);
             wizard = new wizard();
             boss = new Boss();
             item = new Item();
@@ -595,7 +596,7 @@ public class Board extends JPanel implements Commons {
             g2d.drawString("Until then the adventure....", 20, Commons.WIDTH - 740 );
             g2d.drawString("The need to rescue the princess castle perpetrated it out to be.",20,Commons.WIDTH - 709);
             g2d.drawString("Her name is Adelina",20,Commons.WIDTH - 674);
-            g2d.drawString("-> -> -> Presse Right Control To Start Game -> -> -> ", 280, Commons.WIDTH - 270 );
+            g2d.drawString("-> -> -> Presse Right Control To Start Game -> -> -> ", 250, Commons.WIDTH - 270 );
         }else if (stage == 5){
             Font font = new Font("Verdana", Font.BOLD, 18);
             g2d.setColor(Color.white);
@@ -679,7 +680,7 @@ public class Board extends JPanel implements Commons {
             g2d.drawString(Score,
                     Commons.WIDTH - metr.stringWidth(message) - 80,
                     Commons.WIDTH - 480);
-        }else if (){
+        }else if (stage == 7 && boss.getHp() <= 0){
             g2d.drawString(message,
                     (Commons.WIDTH - metr.stringWidth(message)) / 2,
                     Commons.WIDTH - 600 );
@@ -720,7 +721,7 @@ public class Board extends JPanel implements Commons {
 
         @Override
         public void run() {
-            if (stage >= 1 && confirm  && stage != 5 && stage != 6) {
+            if (stage >= 1 && confirm  ) {
                 randomatk = (int) Math.random() * 2;
                 for (Ball numBall : balls) {
                     if (numBall.getIsBall())
@@ -735,7 +736,7 @@ public class Board extends JPanel implements Commons {
                     boss.move();
                 item.move();
                 checkCollision();
-            }else if (stage <= 0 || stage == 5 ){
+            }else if (stage <= 0 || stage == 5 || stage == 6 ){
                 check();
             }
             paddle.move();
@@ -791,6 +792,10 @@ public class Board extends JPanel implements Commons {
                 }
                 item.setisItem();
                 wizard.setWizard(true);
+                /* if (stage != 4) {
+                        stage++;
+                        nextStage();
+                }*/
             }
         }
 
@@ -928,10 +933,10 @@ public class Board extends JPanel implements Commons {
                         System.out.println("moveSpeed " + paddle.getMoveSpeed());
                     }
                     wizard.setWizard(false);
-                    if (stage != 4) {
+                   /* if (stage != 4) {
                         stage++;
                         nextStage();
-                    }
+                    }*/
                 }
             }
 
@@ -1053,8 +1058,7 @@ public class Board extends JPanel implements Commons {
             } else if (stage == 5) {
                 gameInit(6);
             } else if (stage == 6) {
-                message = "Victory";
-                stopGame();
+                gameInit(7);
             }
         }
     }

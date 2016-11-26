@@ -17,7 +17,7 @@ public class Paddle extends Sprite implements Commons{
         image = ii.getImage();
         state = 1;
         moveState = 1;
-        moveSpeed = 6;
+        moveSpeed = 3;
         i_width = image.getWidth(null);
         i_heigth = image.getHeight(null);
 

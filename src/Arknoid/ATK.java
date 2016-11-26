@@ -23,23 +23,34 @@ public class ATK extends Item implements Commons{
         xdir = x;
         ydir = y;
 
-        if (type == 2) {
-            ImageIcon ii = new ImageIcon("brick.png");
+        if (type == 1) {
+            ImageIcon ii = new ImageIcon("ball.png");
             image = ii.getImage();
 
             i_width = image.getWidth(null);
             i_heigth = image.getHeight(null);
             setType(type);
             isAtk = true;
-        }/*else if (type == 2){
-            ImageIcon ii = new ImageIcon("brick1.png");
+
+        }else if (type == 4){
+            ImageIcon ii = new ImageIcon("Picture//item7.png");
             image = ii.getImage();
 
             i_width = image.getWidth(null);
             i_heigth = image.getHeight(null);
             setType(type);
             isAtk = true;
-        }*/
+
+        }else if (type == 3){
+            ImageIcon ii = new ImageIcon("Picture//item8.png");
+            image = ii.getImage();
+
+            i_width = image.getWidth(null);
+            i_heigth = image.getHeight(null);
+            setType(type);
+            isAtk = true;
+
+        }
     }
 
 

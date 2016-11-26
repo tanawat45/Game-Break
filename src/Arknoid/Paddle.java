@@ -7,6 +7,7 @@ public class Paddle extends Sprite implements Commons{
     private int dx;
     private int type = 0;
     private int state = 0 ;
+    private int checkpass;
     private int moveState ;
     private int moveSpeed ;
     ImageIcon ii;
@@ -16,7 +17,7 @@ public class Paddle extends Sprite implements Commons{
         image = ii.getImage();
         state = 1;
         moveState = 1;
-        moveSpeed = 3;
+        moveSpeed = 6;
         i_width = image.getWidth(null);
         i_heigth = image.getHeight(null);
 
@@ -36,9 +37,10 @@ public class Paddle extends Sprite implements Commons{
         if (x <= 0) {
             x = 0;
         }
-
-        if (x >= WIDTH - i_width) {
-            x = WIDTH - i_width;
+        if (checkpass >= 1) {
+            if (x >= WIDTH - i_width) {
+                x = WIDTH - i_width;
+            }
         }
     }
 
@@ -71,7 +73,7 @@ public class Paddle extends Sprite implements Commons{
 
     private void resetState() {
 
-        x = INIT_PADDLE_X;
+        x = 0;
         y = INIT_PADDLE_Y;
     }
 
@@ -110,7 +112,7 @@ public class Paddle extends Sprite implements Commons{
 
     public  void  setState(int state){
         this.state = state;
-        System.out.println("state                              " + state);
+        System.out.println("state" + state);
         if (this.state >= 4) this.state = 4;
         if (this.state <= 1) this.state = 1;
     }
@@ -146,5 +148,7 @@ public class Paddle extends Sprite implements Commons{
         return  moveSpeed;
     }
 
+    public void setCheckpass(int i){
+        checkpass = i;
+    }
 }
-

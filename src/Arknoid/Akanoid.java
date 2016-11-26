@@ -4,20 +4,21 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Akanoid extends JFrame{
-    public Akanoid() {
+    protected Akanoid() {
         initUI();
     }
 
     private void initUI() {
 
         add(new Board());
-        setTitle("Breakout");
+        setTitle("Arkanoid Game");
 
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE); //end rum to closes flrame
         setSize(Commons.WIDTH, Commons.HEIGTH);
         setLocationRelativeTo(null);
         setResizable(false);
-        setVisible(true);
+        setVisible(true);// show frame
+
     }
 
     public static void main(String[] args) {
@@ -25,6 +26,8 @@ public class Akanoid extends JFrame{
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                //JOptionPane.showMessageDialog(null, "  Press Enter To Start Game");
+                //JOptionPane.showMessageDialog(null, "  Stage 1");
                 Akanoid game = new Akanoid();
                 game.setVisible(true);
             }

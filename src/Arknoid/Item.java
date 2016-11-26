@@ -47,35 +47,35 @@ public class Item extends Sprite implements Commons {
         ydir = y;
 
         if (type == 1){
-            ImageIcon ii = new ImageIcon("picture/item1.png");
+            ImageIcon ii = new ImageIcon("Picture//item1.png");
             image = ii.getImage();
 
             i_width = image.getWidth(null);
             i_heigth = image.getHeight(null);
             setType(type);
         }else if (type == 2){
-            ImageIcon ii = new ImageIcon("picture/ball1.png");
+            ImageIcon ii = new ImageIcon("Picture//item5.png");
             image = ii.getImage();
 
             i_width = image.getWidth(null);
             i_heigth = image.getHeight(null);
             setType(type);
         }else if (type == 3){
-            ImageIcon ii = new ImageIcon("picture/ball.png");
+            ImageIcon ii = new ImageIcon("Picture//item4.png");
             image = ii.getImage();
 
             i_width = image.getWidth(null);
             i_heigth = image.getHeight(null);
             setType(type);
         }else if (type == 4) {
-            ImageIcon ii = new ImageIcon("picture/item2.png");
+            ImageIcon ii = new ImageIcon("Picture//item2.png");
             image = ii.getImage();
 
             i_width = image.getWidth(null);
             i_heigth = image.getHeight(null);
             setType(type);
         }else if (type == 5) {
-            ImageIcon ii = new ImageIcon("paddle.png");
+            ImageIcon ii = new ImageIcon("Picture//item3.png");
             image = ii.getImage();
 
             i_width = image.getWidth(null);

@@ -70,7 +70,9 @@ public class Ball extends Sprite implements Commons{
 
         if (y <= 0) {
             setYDir(1);
-            setXDir(-1);
+            System.out.print(xdir + "xxxx");
+            if (xdir == 1) setXDir(1);
+            else setXDir(-1);
         }
     }
 

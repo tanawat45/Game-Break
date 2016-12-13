@@ -19,7 +19,7 @@ public class Board extends JPanel implements Commons {
     private Paddle paddle;
     private Brick bricks[];
     private boolean ingame = true;
-    private int stage = 4;
+    private int stage = 0;
     private int n, count = 0;
     private int nball;
     private Item item;
@@ -152,7 +152,6 @@ public class Board extends JPanel implements Commons {
             boss = new Boss();
             item = new Item();
             confirm = true;
-
             for (int i = 0; i < 10; i++) {
                 if (i == 0 || i == 3 || i == 6 || i == 9) {
                     n = 1;
@@ -792,7 +791,7 @@ public class Board extends JPanel implements Commons {
                 }
                 item.setisItem();
                 wizard.setWizard(true);
-                /* if (stage != 4) {
+                /*if (stage != 4) {
                         stage++;
                         nextStage();
                 }*/
@@ -816,7 +815,7 @@ public class Board extends JPanel implements Commons {
                     {*/
                         stage++;
                         nextStage();
-                 ///  }
+                 //  }
                 }
 
             }
@@ -904,7 +903,7 @@ public class Board extends JPanel implements Commons {
             if (bricks[i].isDestroyed() && bricks[i].getType() != 7){
                 if (boss.getBoss()){
                     int random2 = (int) (Math.random()*30000)+1;
-                    if (random2%13 == 0 && bossatk == 2 && (rebrick > 0 && rebrick < 6)) {
+                    if (random2%13 == 0 && bossatk >= 2 && (rebrick > 0 && rebrick < 6)) {
                         System.out.println("555");
                         rebrick--;
                         if (rebrick == 0){
@@ -933,7 +932,7 @@ public class Board extends JPanel implements Commons {
                         System.out.println("moveSpeed " + paddle.getMoveSpeed());
                     }
                     wizard.setWizard(false);
-                   /* if (stage != 4) {
+                    /*if (stage != 4) {
                         stage++;
                         nextStage();
                     }*/
@@ -948,7 +947,8 @@ public class Board extends JPanel implements Commons {
                         boss.setHp(boss.getHp()-1);
                         System.out.println("bosshp " + boss.getHp());
                         System.out.println("bosshit " + bossatk);
-                        if (bossatk == 2) rebrick = 1;
+                        if (bossatk >= 5) rebrick = 2;
+
                         int paddleLPos = (int) boss.getRect().getMinX();
                         int ballLPos = (int) numBall.getRect().getMinX();
 
@@ -959,7 +959,7 @@ public class Board extends JPanel implements Commons {
 
                         if (ballLPos < first) {
                             numBall.setXDir(-1);
-                            numBall.setYDir(-1);
+                            numBall.setYDir(1);
                         }
 
                         if (ballLPos >= first && ballLPos < second) {
@@ -979,7 +979,7 @@ public class Board extends JPanel implements Commons {
 
                         if (ballLPos > fourth) {
                             numBall.setXDir(1);
-                            numBall.setYDir(-1);
+                            numBall.setYDir(1);
                         }
                     }
                 }

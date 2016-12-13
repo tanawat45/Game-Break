@@ -11,10 +11,10 @@ public class Boss extends Item {
     private int atkboss;
     private int dx,moveState;
     public Boss(){
-        hp = 7000;
+        hp = 100000;
         x = 600;
         y = 00;
-        ImageIcon ii = new ImageIcon("boss2.1.1.png");
+        ImageIcon ii = new ImageIcon("angry.png");
         image = ii.getImage();
 
         i_width = image.getWidth(null);

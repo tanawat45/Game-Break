@@ -37,7 +37,7 @@ public class Brick extends Sprite{
 
             ImageIcon ii = new ImageIcon("brick3.png");
             image = ii.getImage();
-            hit = 3;
+            hit = 2;
             i_width = image.getWidth(null);
             i_heigth = image.getHeight(null);
 

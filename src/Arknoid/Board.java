@@ -862,21 +862,26 @@ public class Board extends JPanel implements Commons {
                         item5 = -1;
                     ;
                 }
-                int paddleLPos = (int) paddle.getRect().getMinX();
+
+                numBall.setXDir(1* numBall.getXDir());
+                numBall.setYDir(-1);
+
+               /* int paddleLPos = (int) paddle.getRect().getMinX();
                 int ballLPos = (int) numBall.getRect().getMinX();
 
                 int first = paddleLPos + 8;
                 int second = paddleLPos + 16;
                 int third = paddleLPos + 24;
-                int fourth = paddleLPos + 32;
+                int fourth = paddleLPos + 32;*/
 
-                if (ballLPos < first) {
-                    numBall.setXDir(-1);
+
+               /* if (ballLPos < first) {
+                    numBall.setXDir(-1 * numBall.getXDir());
                     numBall.setYDir(-1);
                 }
 
                 if (ballLPos >= first && ballLPos < second) {
-                    numBall.setXDir(-1);
+                    numBall.setXDir(-1 * numBall.getXDir());
                     numBall.setYDir(-1 * numBall.getYDir());
                 }
 
@@ -886,14 +891,14 @@ public class Board extends JPanel implements Commons {
                 }
 
                 if (ballLPos >= third && ballLPos < fourth) {
-                    numBall.setXDir(1);
+                    numBall.setXDir(-1 * numBall.getXDir());
                     numBall.setYDir(-1 * numBall.getYDir());
                 }
 
                 if (ballLPos > fourth) {
-                    numBall.setXDir(1);
+                    numBall.setXDir(1* numBall.getXDir());
                     numBall.setYDir(-1);
-                }
+                }*/
             }
         }
 
@@ -1010,19 +1015,22 @@ public class Board extends JPanel implements Commons {
                             Point pointLeft = new Point(ballLeft - 1, ballTop);
                             Point pointTop = new Point(ballLeft, ballTop - 1);
                             Point pointBottom = new Point(ballLeft, ballTop + ballHeight + 1);
-
-                            if (!bricks[i].isDestroyed()) {
+                            System.out.println("111111111111111111111111111  " + numBall.getXDir());
+                                if (!bricks[i].isDestroyed()) {
                                 if (bricks[i].getRect().contains(pointRight)) {
-                                    numBall.setXDir(-1);
-                                } else if (bricks[i].getRect().contains(pointLeft)) {
                                     numBall.setXDir(1);
+                                } else if (bricks[i].getRect().contains(pointLeft)) {
+                                    numBall.setXDir(-1);
                                 }
 
                                 if (bricks[i].getRect().contains(pointTop)) {
                                     numBall.setYDir(1);
+                                    numBall.setXDir(numBall.getXDir()*-1);
                                 } else if (bricks[i].getRect().contains(pointBottom)) {
                                     numBall.setYDir(-1);
+                                    numBall.setXDir(numBall.getXDir()*-1);
                                 }
+                                    System.out.println("222222222222222222222222222  " + numBall.getXDir());
                                 bricks[i].setDestroyed();
                             }
                             if (bricks[i].isDestroyed()) {
